@@ -138,6 +138,7 @@ flutter:
     - packages/flutter_shader_snap/shaders/smoke_snap_effect_shader.glsl # add if you use SnapShaderType.smoke
 
   assets:
+    - assets/home.jpg
     - assets/languages/
     - assets/images/
     - assets/images/branding/

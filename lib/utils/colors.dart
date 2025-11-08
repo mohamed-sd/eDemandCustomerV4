@@ -7,7 +7,7 @@ extension AppColors on ColorScheme {
   //card color
   static Color lightSecondaryColor = const Color(0xffFFFFFF);
   //main color
-  static Color lightAccentColor = const Color(0xff2F88EB);
+  static Color lightAccentColor = const Color(0xFFEDC242);
   //text color
   static Color lightSubHeadingColor1 = const Color(0xff212121);
 
@@ -17,7 +17,7 @@ extension AppColors on ColorScheme {
   //card color
   static Color darkSecondaryColor = const Color(0xff212121);
   //main color
-  static Color darkAccentColor = const Color(0xff0079FF);
+  static Color darkAccentColor = const Color(0xFFEDC242);
   //text color
   static Color darkSubHeadingColor1 = const Color(0xffFFFFFF);
 
@@ -26,8 +26,8 @@ extension AppColors on ColorScheme {
   Color get lightGreyColor => const Color(0xff8B8B8B);
 
   //splashScreen GradientColor
-  static Color splashScreenGradientTopColor = const Color(0xff2050D2);
-  static Color splashScreenGradientBottomColor = const Color(0xff143386);
+  static Color splashScreenGradientTopColor = const Color(0xffdcae15);
+  static Color splashScreenGradientBottomColor = const Color(0xfff8c006);
 
   Color get primaryColor =>
       brightness == Brightness.light ? lightPrimaryColor : darkPrimaryColor;

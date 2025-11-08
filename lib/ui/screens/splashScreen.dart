@@ -285,26 +285,26 @@ class _SplashScreenState extends State<SplashScreen> {
                           ),
                           width: context.screenWidth,
                           height: context.screenHeight,
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 15, vertical: 10),
-                          child: const Center(
-                            child: CustomSvgPicture(
-                                svgImage: AppAssets.splashLogo,
-                                height: 240,
-                                width: 220),
-                          ),
-                        ),
-                        if (isDemoMode)
-                          const Padding(
-                            padding: EdgeInsetsDirectional.only(bottom: 50),
-                            child: Align(
-                              alignment: Alignment.bottomCenter,
-                              child: CustomSvgPicture(
-                                  svgImage: AppAssets.splashScreenBottomLogo,
-                                  width: 135,
-                                  height: 25),
+                          // padding: const EdgeInsets.symmetric(
+                          //     horizontal: 15, vertical: 10),
+                          child: Center(
+                            child: Image.asset(
+                            'assets/home.jpg',
+                            fit: BoxFit.cover,
                             ),
                           ),
+                        ),
+                        // if (isDemoMode)
+                        //   const Padding(
+                        //     padding: EdgeInsetsDirectional.only(bottom: 50),
+                        //     child: Align(
+                        //       alignment: Alignment.bottomCenter,
+                        //       child: CustomSvgPicture(
+                        //           svgImage: AppAssets.splashScreenBottomLogo,
+                        //           width: 135,
+                        //           height: 25),
+                        //     ),
+                        //   ),
                       ],
                     )));
           },
