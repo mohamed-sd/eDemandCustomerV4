@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "456960144949",
+    "project_id": "bareeq-laravel-flutter",
+    "storage_bucket": "bareeq-laravel-flutter.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:456960144949:android:168e9922133e696ade637c",
+        "android_client_info": {
+          "package_name": "sd.bareeq.customer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "456960144949-bkemopi1glb0nm4anulce39t01i5ghh1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBDvRuS-tpzbnGvhvMKaEsYzfCvA56DES0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "456960144949-bkemopi1glb0nm4anulce39t01i5ghh1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
