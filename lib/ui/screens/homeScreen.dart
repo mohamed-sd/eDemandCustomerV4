@@ -201,7 +201,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             CustomText(
-              'services'.translate(context: context),
+              'categories'.translate(context: context),
               color: context.colorScheme.blackColor,
               fontWeight: FontWeight.w700,
               fontStyle: FontStyle.normal,

@@ -896,7 +896,7 @@ class _ChatMessagesScreenState extends State<ChatMessagesScreen> {
           padding: const EdgeInsets.all(10),
           child: CustomText(
             message.translate(context: context),
-            color: context.colorScheme.accentColor,
+            color: context.colorScheme.blackColor,
             textAlign: TextAlign.center,
             fontSize: 12,
           ),

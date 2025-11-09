@@ -234,7 +234,7 @@ class CustomNavigationBarState extends State<CustomNavigationBar>
                             _getBottomNavigationBarItem(
                               activeImage: AppAssets.activeCategory,
                               deActiveImage: AppAssets.deactiveCategory,
-                              title: 'services'.translate(context: context),
+                              title: 'categories'.translate(context: context),
                               index: 2,
                               currentIndex:
                                   selectedIndexOfBottomNavigationBar.value,
