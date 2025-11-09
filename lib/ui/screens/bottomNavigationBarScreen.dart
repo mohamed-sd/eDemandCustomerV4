@@ -220,6 +220,7 @@ class CustomNavigationBarState extends State<CustomNavigationBar>
                               index: 0,
                               currentIndex:
                                   selectedIndexOfBottomNavigationBar.value,
+                                themeState: themeState
                             ),
                             _getBottomNavigationBarItem(
                               activeImage: AppAssets.activeBooking,
@@ -228,6 +229,7 @@ class CustomNavigationBarState extends State<CustomNavigationBar>
                               index: 1,
                               currentIndex:
                                   selectedIndexOfBottomNavigationBar.value,
+                                themeState: themeState
                             ),
                             _getBottomNavigationBarItem(
                               activeImage: AppAssets.activeCategory,
@@ -236,6 +238,7 @@ class CustomNavigationBarState extends State<CustomNavigationBar>
                               index: 2,
                               currentIndex:
                                   selectedIndexOfBottomNavigationBar.value,
+                                themeState: themeState
                             ),
                             _getBottomNavigationBarItem(
                               activeImage: AppAssets.activeMyReq,
@@ -244,6 +247,7 @@ class CustomNavigationBarState extends State<CustomNavigationBar>
                               index: 3,
                               currentIndex:
                                   selectedIndexOfBottomNavigationBar.value,
+                                themeState: themeState
                             ),
                             _getBottomNavigationBarItem(
                               activeImage: AppAssets.activeProfile,
@@ -252,6 +256,7 @@ class CustomNavigationBarState extends State<CustomNavigationBar>
                               index: 4,
                               currentIndex:
                                   selectedIndexOfBottomNavigationBar.value,
+                              themeState: themeState
                             ),
                           ],
                         ),
@@ -271,6 +276,7 @@ class CustomNavigationBarState extends State<CustomNavigationBar>
     required final String title,
     required final int index,
     required final int currentIndex,
+    required dynamic themeState,
   }) =>
       BottomNavigationBarItem(
         icon: currentIndex == index
@@ -280,7 +286,9 @@ class CustomNavigationBarState extends State<CustomNavigationBar>
               )
             : CustomSvgPicture(
                 svgImage: deActiveImage,
+                color: themeState.appTheme == AppTheme.dark ? Colors.grey : Colors.black87,
               ),
         label: title,
       );
 }
+
