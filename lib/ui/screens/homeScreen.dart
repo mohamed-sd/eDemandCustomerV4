@@ -536,6 +536,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   _getSingleSectionTitle(sectionData),
+                  //************************************************************
                   _getSingleSectionData(sectionData),
                 ],
               ),
@@ -557,98 +558,190 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       );
 
   Widget _getSingleSectionData(final Sections sectionData) {
-    return SizedBox(
-      width: context.screenWidth,
-      child: SingleChildScrollView(
-        padding: const EdgeInsetsDirectional.only(end: 15, start: 5),
-        physics: const AlwaysScrollableScrollPhysics(),
-        scrollDirection: Axis.horizontal,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: List.generate(
-            sectionData.subCategories.isNotEmpty
-                ? sectionData.subCategories.length
-                : sectionData.partners.isNotEmpty
-                    ? sectionData.partners.length
-                    : sectionData.onGoingBookings.isNotEmpty
-                        ? sectionData.onGoingBookings.length
-                        : sectionData.previousBookings.isNotEmpty
-                            ? sectionData.previousBookings.length
-                            : 0,
-            (index) {
-              if (sectionData.subCategories.isNotEmpty) {
-                return SectionCardForCategoryContainer(
-                  title: sectionData.subCategories[index].translatedName!,
-                  image: sectionData.subCategories[index].image!,
-                  discount: "0",
-                  cardHeight: 200,
-                  imageHeight: 135,
-                  imageWidth: 135,
-                  providerCounter:
-                      sectionData.subCategories[index].totalProviders!,
-                  onTap: () async {
-                    await Navigator.pushNamed(
-                      context,
-                      subCategoryRoute,
-                      arguments: {
-                        "categoryId": sectionData.subCategories[index].id,
-                        "appBarTitle":
-                            sectionData.subCategories[index].translatedName,
-                        "type": CategoryType.category,
-                      },
-                    );
-                  },
-                );
-              } else if (sectionData.partners.isNotEmpty) {
-                return SectionCardForProviderContainer(
-                  title: sectionData.partners[index].translatedCompanyName!,
-                  image: sectionData.partners[index].image!,
-                  discount: sectionData.partners[index].discount!,
-                  bannerImage: sectionData.partners[index].bannerImage!,
-                  numberOfRating: sectionData.partners[index].numberOfRating!,
-                  averageRating: sectionData.partners[index].averageRating!,
-                  distance: sectionData.partners[index].discount!,
-                  services: sectionData.partners[index].totalServices!,
-                  cardHeight: 180,
-                  cardWidth: 290,
-                  imageHeight: 135,
-                  imageWidth: 120,
-                  onTap: () {
-                    Navigator.pushNamed(
-                      context,
-                      providerRoute,
-                      arguments: {"providerId": sectionData.partners[index].id},
-                    ).then(
-                      (final Object? value) {
-                        //we are changing the route name
-                        //to use CartSubDetailsContainer widget to navigate to provider details screen
-                        Routes.previousRoute = Routes.currentRoute;
-                        Routes.currentRoute = navigationRoute;
-                      },
-                    );
-                  },
-                );
-              } else if (sectionData.onGoingBookings.isNotEmpty) {
-                final Booking bookingData = sectionData.onGoingBookings[index];
+    // تحديد العناصر المراد عرضها
+    final items = sectionData.subCategories.isNotEmpty
+        ? sectionData.subCategories
+        : sectionData.partners.isNotEmpty
+        ? sectionData.partners
+        : sectionData.onGoingBookings.isNotEmpty
+        ? sectionData.onGoingBookings
+        : sectionData.previousBookings.isNotEmpty
+        ? sectionData.previousBookings
+        : [];
 
-                return _getBookingDetailsCard(bookingDetailsData: bookingData);
-              } else if (sectionData.previousBookings.isNotEmpty) {
-                final Booking bookingData = sectionData.previousBookings[index];
-                if (sectionData.sectionType == "previous_order") {
-                  return PreviousOrderCardContainer(
-                      bookingDetailsData: bookingData);
-                } else {
-                  return _getBookingDetailsCard(
-                      bookingDetailsData: bookingData);
-                }
-              }
-              return const SizedBox();
-            },
-          ),
-        ),
+    // إذا لا يوجد عناصر، رجّع SizedBox فارغ
+    if (items.isEmpty) return const SizedBox();
+
+    return GridView.builder(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(), // بدون scroll
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 3, // عدد الأعمدة
+        mainAxisSpacing: 10, // المسافة الرأسية
+        crossAxisSpacing: 10, // المسافة الأفقية
+        childAspectRatio: 0.8, // تناسب العرض مع الارتفاع
       ),
+      itemCount: items.length,
+      itemBuilder: (context, index) {
+        if (sectionData.subCategories.isNotEmpty) {
+          final item = sectionData.subCategories[index];
+          return SectionCardForCategoryContainer(
+            title: item.translatedName!,
+            image: item.image!,
+            discount: "0",
+            cardHeight: 100,
+            imageHeight: 80,
+            imageWidth: 135,
+            providerCounter: item.totalProviders!,
+            onTap: () async {
+              await Navigator.pushNamed(
+                context,
+                subCategoryRoute,
+                arguments: {
+                  "categoryId": item.id,
+                  "appBarTitle": item.translatedName,
+                  "type": CategoryType.category,
+                },
+              );
+            },
+          );
+        } else if (sectionData.partners.isNotEmpty) {
+          final item = sectionData.partners[index];
+          return SectionCardForProviderContainer(
+            title: item.translatedCompanyName!,
+            image: item.image!,
+            discount: item.discount!,
+            bannerImage: item.bannerImage!,
+            numberOfRating: item.numberOfRating!,
+            averageRating: item.averageRating!,
+            distance: item.discount!,
+            services: item.totalServices!,
+            cardHeight: 180,
+            cardWidth: 290,
+            imageHeight: 135,
+            imageWidth: 120,
+            onTap: () {
+              Navigator.pushNamed(
+                context,
+                providerRoute,
+                arguments: {"providerId": item.id},
+              ).then((value) {
+                Routes.previousRoute = Routes.currentRoute;
+                Routes.currentRoute = navigationRoute;
+              });
+            },
+          );
+        } else if (sectionData.onGoingBookings.isNotEmpty) {
+          final bookingData = sectionData.onGoingBookings[index];
+          return _getBookingDetailsCard(bookingDetailsData: bookingData);
+        } else if (sectionData.previousBookings.isNotEmpty) {
+          final bookingData = sectionData.previousBookings[index];
+          if (sectionData.sectionType == "previous_order") {
+            return PreviousOrderCardContainer(bookingDetailsData: bookingData);
+          } else {
+            return _getBookingDetailsCard(bookingDetailsData: bookingData);
+          }
+        }
+        return const SizedBox();
+      },
     );
   }
+
+
+  // Widget _getSingleSectionData(final Sections sectionData) {
+  //   return SizedBox(
+  //     width: context.screenWidth,
+  //     child: SingleChildScrollView(
+  //       padding: const EdgeInsetsDirectional.only(end: 15, start: 5),
+  //       physics: const AlwaysScrollableScrollPhysics(),
+  //       scrollDirection: Axis.horizontal,
+  //       child: Row(
+  //         crossAxisAlignment: CrossAxisAlignment.start,
+  //         children: List.generate(
+  //           sectionData.subCategories.isNotEmpty
+  //               ? sectionData.subCategories.length
+  //               : sectionData.partners.isNotEmpty
+  //                   ? sectionData.partners.length
+  //                   : sectionData.onGoingBookings.isNotEmpty
+  //                       ? sectionData.onGoingBookings.length
+  //                       : sectionData.previousBookings.isNotEmpty
+  //                           ? sectionData.previousBookings.length
+  //                           : 0,
+  //           (index) {
+  //             if (sectionData.subCategories.isNotEmpty) {
+  //               return SectionCardForCategoryContainer(
+  //                 title: sectionData.subCategories[index].translatedName!,
+  //                 image: sectionData.subCategories[index].image!,
+  //                 discount: "0",
+  //                 cardHeight: 200,
+  //                 imageHeight: 135,
+  //                 imageWidth: 135,
+  //                 providerCounter:
+  //                     sectionData.subCategories[index].totalProviders!,
+  //                 onTap: () async {
+  //                   await Navigator.pushNamed(
+  //                     context,
+  //                     subCategoryRoute,
+  //                     arguments: {
+  //                       "categoryId": sectionData.subCategories[index].id,
+  //                       "appBarTitle":
+  //                           sectionData.subCategories[index].translatedName,
+  //                       "type": CategoryType.category,
+  //                     },
+  //                   );
+  //                 },
+  //               );
+  //             } else if (sectionData.partners.isNotEmpty) {
+  //               return SectionCardForProviderContainer(
+  //                 title: sectionData.partners[index].translatedCompanyName!,
+  //                 image: sectionData.partners[index].image!,
+  //                 discount: sectionData.partners[index].discount!,
+  //                 bannerImage: sectionData.partners[index].bannerImage!,
+  //                 numberOfRating: sectionData.partners[index].numberOfRating!,
+  //                 averageRating: sectionData.partners[index].averageRating!,
+  //                 distance: sectionData.partners[index].discount!,
+  //                 services: sectionData.partners[index].totalServices!,
+  //                 cardHeight: 180,
+  //                 cardWidth: 290,
+  //                 imageHeight: 135,
+  //                 imageWidth: 120,
+  //                 onTap: () {
+  //                   Navigator.pushNamed(
+  //                     context,
+  //                     providerRoute,
+  //                     arguments: {"providerId": sectionData.partners[index].id},
+  //                   ).then(
+  //                     (final Object? value) {
+  //                       //we are changing the route name
+  //                       //to use CartSubDetailsContainer widget to navigate to provider details screen
+  //                       Routes.previousRoute = Routes.currentRoute;
+  //                       Routes.currentRoute = navigationRoute;
+  //                     },
+  //                   );
+  //                 },
+  //               );
+  //             } else if (sectionData.onGoingBookings.isNotEmpty) {
+  //               final Booking bookingData = sectionData.onGoingBookings[index];
+  //
+  //               return _getBookingDetailsCard(bookingDetailsData: bookingData);
+  //             } else if (sectionData.previousBookings.isNotEmpty) {
+  //               final Booking bookingData = sectionData.previousBookings[index];
+  //               if (sectionData.sectionType == "previous_order") {
+  //                 return PreviousOrderCardContainer(
+  //                     bookingDetailsData: bookingData);
+  //               } else {
+  //                 return _getBookingDetailsCard(
+  //                     bookingDetailsData: bookingData);
+  //               }
+  //             }
+  //             return const SizedBox();
+  //           },
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 
   Widget _getBookingDetailsCard({required Booking bookingDetailsData}) {
     return CustomContainer(

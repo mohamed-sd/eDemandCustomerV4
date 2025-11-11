@@ -47,26 +47,32 @@ class SectionCardForCategoryContainer extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsetsDirectional.only(top: 5),
-                child: CustomText(
-                  title,
-                  maxLines: 1,
-                  color: context.colorScheme.blackColor,
-                  fontStyle: FontStyle.normal,
-                  fontSize: 14,
-                  textAlign: TextAlign.left,
-                  fontWeight: FontWeight.w500,
+                child: Container(
+                  width: double.infinity,
+                  child: CustomText(
+                    title,
+                    maxLines: 1,
+                    color: context.colorScheme.blackColor,
+                    fontStyle: FontStyle.normal,
+                    fontSize: 14,
+                    textAlign: TextAlign.center,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
               ),
               Padding(
                 padding: const EdgeInsetsDirectional.only(top: 5),
-                child: CustomText(
-                  "$providerCounter ${providerCounter.toInt() > 1 ? 'providers'.translate(context: context) : 'provider'.translate(context: context)}",
-                  maxLines: 1,
-                  color: context.colorScheme.lightGreyColor,
-                  fontStyle: FontStyle.normal,
-                  fontSize: 12,
-                  textAlign: TextAlign.left,
-                  fontWeight: FontWeight.w500,
+                child: Container(
+                  width: double.infinity,
+                  child: CustomText(
+                    "$providerCounter ${providerCounter.toInt() > 1 ? 'providers'.translate(context: context) : 'provider'.translate(context: context)}",
+                    maxLines: 1,
+                    color: context.colorScheme.lightGreyColor,
+                    fontStyle: FontStyle.normal,
+                    fontSize: 12,
+                    textAlign: TextAlign.center,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
               ),
             ],
