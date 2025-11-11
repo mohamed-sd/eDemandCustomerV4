@@ -533,7 +533,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               margin: const EdgeInsetsDirectional.only(top: 10),
               color: context.colorScheme.secondaryColor,
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   _getSingleSectionTitle(sectionData),
                   //************************************************************
