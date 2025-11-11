@@ -147,6 +147,9 @@ flutter:
     - assets/animation/
 
   fonts:
+    - family: IBMPlexArabic
+      fonts:
+        - asset: assets/fonts/IBMPlexSansArabic-Regular.ttf
     - family: Lexend
       fonts:
         - asset: assets/fonts/Lexend-Black.ttf

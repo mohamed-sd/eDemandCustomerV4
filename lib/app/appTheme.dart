@@ -6,7 +6,7 @@ enum AppTheme { dark, light }
 // Common theme data that both light and dark themes share
 final commonThemeData = ThemeData(
   useMaterial3: true,
-  fontFamily: "Lexend",
+  fontFamily: "IBMPlexArabic",
 );
 
 final Map<AppTheme, ThemeData> appThemeData = {
