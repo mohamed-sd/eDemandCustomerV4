@@ -546,22 +546,29 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       );
 
   Widget _getSingleSectionTitle(final Sections sectionData) => Container(
-      margin: EdgeInsets.only(right: 10, left: 10),
+      margin: const EdgeInsets.only(right: 10, left: 10),
       width: double.infinity,
-      padding: EdgeInsets.all(5),
+      padding: const EdgeInsets.all(5),
       decoration: BoxDecoration(
-          color: context.colorScheme.secondaryColor, borderRadius: BorderRadius.circular(15)),
+          color: context.colorScheme.secondaryColor,
+          borderRadius: BorderRadius.circular(15)),
       child: Container(
-        padding: EdgeInsets.only(top: 8 , bottom: 8),
+        padding: const EdgeInsets.only(top: 8, bottom: 8),
         decoration: BoxDecoration(
-          color: context.colorScheme.accentColor,
-            borderRadius: BorderRadius.circular(15)
-        ),
+            color: context.colorScheme.accentColor,
+            borderRadius: BorderRadius.circular(15)),
         child: Padding(
-          padding: const EdgeInsetsDirectional.only(start: 15, end: 15, top: 10),
+          padding:
+              const EdgeInsetsDirectional.only(start: 15, end: 15, top: 10),
           child: Row(
             children: [
-              IconButton(onPressed: (){}, icon: Icon(Icons.keyboard_arrow_down , size: 30 , weight: 20,)),
+              IconButton(
+                  onPressed: () {},
+                  icon: const Icon(
+                    Icons.keyboard_arrow_down,
+                    size: 30,
+                    weight: 20,
+                  )),
               CustomText(
                 sectionData.translatedTitle!,
                 color: Colors.black,
@@ -658,7 +665,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           } else if (sectionData.previousBookings.isNotEmpty) {
             final bookingData = sectionData.previousBookings[index];
             if (sectionData.sectionType == "previous_order") {
-              return PreviousOrderCardContainer(bookingDetailsData: bookingData);
+              return PreviousOrderCardContainer(
+                  bookingDetailsData: bookingData);
             } else {
               return _getBookingDetailsCard(bookingDetailsData: bookingData);
             }
@@ -952,10 +960,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                               .homeScreenData.sliders!,
                                         ),
                                       ],
-                                      _getCategoryListContainer(
-                                        categoryList: homeScreenState
-                                            .homeScreenData.category!,
-                                      ),
+                                      // _getCategoryListContainer(
+                                      //   categoryList: homeScreenState
+                                      //       .homeScreenData.category!,
+                                      // ),
                                       _getSections(
                                         sectionsList: homeScreenState
                                             .homeScreenData.sections!,
