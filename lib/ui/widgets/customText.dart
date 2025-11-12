@@ -46,7 +46,7 @@ class CustomText extends StatelessWidget {
         decorationColor: underlineOrLineColor,
         height: height,
         letterSpacing: letterSpacing,
-        fontFamily: 'Lexend');
+        fontFamily: 'IBMPlexArabic');
   }
 
   @override

@@ -531,7 +531,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
             return CustomContainer(
               margin: const EdgeInsetsDirectional.only(top: 10),
-              color: context.colorScheme.secondaryColor,
+              color: context.colorScheme.accentColor.withAlpha(15),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -545,109 +545,129 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         ),
       );
 
-  Widget _getSingleSectionTitle(final Sections sectionData) => Padding(
-        padding: const EdgeInsetsDirectional.only(start: 15, end: 15, top: 10),
-        child: CustomText(
-          sectionData.translatedTitle!,
-          color: context.colorScheme.blackColor,
-          fontWeight: FontWeight.w600,
-          fontSize: 18,
-          maxLines: 1,
-          textAlign: TextAlign.left,
+  Widget _getSingleSectionTitle(final Sections sectionData) => Container(
+      margin: EdgeInsets.only(right: 10, left: 10),
+      width: double.infinity,
+      padding: EdgeInsets.all(5),
+      decoration: BoxDecoration(
+          color: context.colorScheme.secondaryColor, borderRadius: BorderRadius.circular(15)),
+      child: Container(
+        padding: EdgeInsets.only(top: 8 , bottom: 8),
+        decoration: BoxDecoration(
+          color: context.colorScheme.accentColor,
+            borderRadius: BorderRadius.circular(15)
         ),
-      );
+        child: Padding(
+          padding: const EdgeInsetsDirectional.only(start: 15, end: 15, top: 10),
+          child: Row(
+            children: [
+              IconButton(onPressed: (){}, icon: Icon(Icons.keyboard_arrow_down , size: 30 , weight: 20,)),
+              CustomText(
+                sectionData.translatedTitle!,
+                color: Colors.black,
+                fontWeight: FontWeight.w600,
+                fontSize: 18,
+                maxLines: 1,
+                textAlign: TextAlign.right,
+              ),
+            ],
+          ),
+        ),
+      ));
 
   Widget _getSingleSectionData(final Sections sectionData) {
     // تحديد العناصر المراد عرضها
     final items = sectionData.subCategories.isNotEmpty
         ? sectionData.subCategories
         : sectionData.partners.isNotEmpty
-        ? sectionData.partners
-        : sectionData.onGoingBookings.isNotEmpty
-        ? sectionData.onGoingBookings
-        : sectionData.previousBookings.isNotEmpty
-        ? sectionData.previousBookings
-        : [];
+            ? sectionData.partners
+            : sectionData.onGoingBookings.isNotEmpty
+                ? sectionData.onGoingBookings
+                : sectionData.previousBookings.isNotEmpty
+                    ? sectionData.previousBookings
+                    : [];
 
     // إذا لا يوجد عناصر، رجّع SizedBox فارغ
     if (items.isEmpty) return const SizedBox();
 
-    return GridView.builder(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(), // بدون scroll
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 3, // عدد الأعمدة
-        mainAxisSpacing: 10, // المسافة الرأسية
-        crossAxisSpacing: 10, // المسافة الأفقية
-        childAspectRatio: 0.8, // تناسب العرض مع الارتفاع
-      ),
-      itemCount: items.length,
-      itemBuilder: (context, index) {
-        if (sectionData.subCategories.isNotEmpty) {
-          final item = sectionData.subCategories[index];
-          return SectionCardForCategoryContainer(
-            title: item.translatedName!,
-            image: item.image!,
-            discount: "0",
-            cardHeight: 100,
-            imageHeight: 80,
-            imageWidth: 135,
-            providerCounter: item.totalProviders!,
-            onTap: () async {
-              await Navigator.pushNamed(
-                context,
-                subCategoryRoute,
-                arguments: {
-                  "categoryId": item.id,
-                  "appBarTitle": item.translatedName,
-                  "type": CategoryType.category,
-                },
-              );
-            },
-          );
-        } else if (sectionData.partners.isNotEmpty) {
-          final item = sectionData.partners[index];
-          return SectionCardForProviderContainer(
-            title: item.translatedCompanyName!,
-            image: item.image!,
-            discount: item.discount!,
-            bannerImage: item.bannerImage!,
-            numberOfRating: item.numberOfRating!,
-            averageRating: item.averageRating!,
-            distance: item.discount!,
-            services: item.totalServices!,
-            cardHeight: 180,
-            cardWidth: 290,
-            imageHeight: 135,
-            imageWidth: 120,
-            onTap: () {
-              Navigator.pushNamed(
-                context,
-                providerRoute,
-                arguments: {"providerId": item.id},
-              ).then((value) {
-                Routes.previousRoute = Routes.currentRoute;
-                Routes.currentRoute = navigationRoute;
-              });
-            },
-          );
-        } else if (sectionData.onGoingBookings.isNotEmpty) {
-          final bookingData = sectionData.onGoingBookings[index];
-          return _getBookingDetailsCard(bookingDetailsData: bookingData);
-        } else if (sectionData.previousBookings.isNotEmpty) {
-          final bookingData = sectionData.previousBookings[index];
-          if (sectionData.sectionType == "previous_order") {
-            return PreviousOrderCardContainer(bookingDetailsData: bookingData);
-          } else {
+    return Container(
+      padding: EdgeInsets.all(5),
+      child: GridView.builder(
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(), // بدون scroll
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 3, // عدد الأعمدة
+          mainAxisSpacing: 10, // المسافة الرأسية
+          crossAxisSpacing: 10, // المسافة الأفقية
+          childAspectRatio: 0.8, // تناسب العرض مع الارتفاع
+        ),
+        itemCount: items.length,
+        itemBuilder: (context, index) {
+          if (sectionData.subCategories.isNotEmpty) {
+            final item = sectionData.subCategories[index];
+            return SectionCardForCategoryContainer(
+              title: item.translatedName!,
+              image: item.image!,
+              discount: "0",
+              cardHeight: 100,
+              imageHeight: 80,
+              imageWidth: 135,
+              providerCounter: item.totalProviders!,
+              onTap: () async {
+                await Navigator.pushNamed(
+                  context,
+                  subCategoryRoute,
+                  arguments: {
+                    "categoryId": item.id,
+                    "appBarTitle": item.translatedName,
+                    "type": CategoryType.category,
+                  },
+                );
+              },
+            );
+          } else if (sectionData.partners.isNotEmpty) {
+            final item = sectionData.partners[index];
+            return SectionCardForProviderContainer(
+              title: item.translatedCompanyName!,
+              image: item.image!,
+              discount: item.discount!,
+              bannerImage: item.bannerImage!,
+              numberOfRating: item.numberOfRating!,
+              averageRating: item.averageRating!,
+              distance: item.discount!,
+              services: item.totalServices!,
+              cardHeight: 180,
+              cardWidth: 290,
+              imageHeight: 135,
+              imageWidth: 120,
+              onTap: () {
+                Navigator.pushNamed(
+                  context,
+                  providerRoute,
+                  arguments: {"providerId": item.id},
+                ).then((value) {
+                  Routes.previousRoute = Routes.currentRoute;
+                  Routes.currentRoute = navigationRoute;
+                });
+              },
+            );
+          } else if (sectionData.onGoingBookings.isNotEmpty) {
+            final bookingData = sectionData.onGoingBookings[index];
             return _getBookingDetailsCard(bookingDetailsData: bookingData);
+          } else if (sectionData.previousBookings.isNotEmpty) {
+            final bookingData = sectionData.previousBookings[index];
+            if (sectionData.sectionType == "previous_order") {
+              return PreviousOrderCardContainer(bookingDetailsData: bookingData);
+            } else {
+              return _getBookingDetailsCard(bookingDetailsData: bookingData);
+            }
           }
-        }
-        return const SizedBox();
-      },
+          return const SizedBox();
+        },
+      ),
     );
   }
-
 
   // Widget _getSingleSectionData(final Sections sectionData) {
   //   return SizedBox(

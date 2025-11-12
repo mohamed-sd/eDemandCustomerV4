@@ -20,8 +20,13 @@ class SectionCardForCategoryContainer extends StatelessWidget {
   @override
   Widget build(final BuildContext context) => CustomInkWellContainer(
         onTap: onTap,
-        child: CustomContainer(
-          padding: const EdgeInsetsDirectional.only(top: 10, start: 10),
+        child: Container(
+          padding: EdgeInsets.all(5),
+          decoration: BoxDecoration(
+              color: context.colorScheme.secondaryColor,
+            borderRadius: BorderRadius.circular(10)
+          ),
+          // padding: const EdgeInsetsDirectional.only(top: 10, start: 10),
           height: cardHeight,
           width: imageWidth,
           child: Column(
