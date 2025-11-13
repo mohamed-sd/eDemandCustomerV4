@@ -50,32 +50,32 @@ class ServiceDetailsCard extends StatelessWidget {
         child: Stack(
           alignment: Alignment.topCenter,
           children: [
-            PositionedDirectional(
-              end: 118,
-              child: Container(
-                alignment: Alignment.topCenter,
-                height: 30,
-                width: 110.rw(context),
-                child: CustomPaint(
-                  size:  Size(110.rw(context), 30), // Width and height of the banner
-                  foregroundPainter: BannerPainter.BannerPainter(),
-                  child: CustomContainer(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    alignment: Alignment.center,
-                    child: MarqueeWidget(
-                      key: ValueKey(services.id),
-                      child: CustomText(
-                        "${'save'.translate(context: context)} ${saveAmount.priceFormat(context)}",
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
-                        color: context.colorScheme.accentColor,
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
+            // PositionedDirectional(
+            //   end: 118,
+            //   child: Container(
+            //     alignment: Alignment.topCenter,
+            //     height: 30,
+            //     width: 110.rw(context),
+            //     child: CustomPaint(
+            //       size:  Size(110.rw(context), 30), // Width and height of the banner
+            //       foregroundPainter: BannerPainter.BannerPainter(),
+            //       child: CustomContainer(
+            //         padding: const EdgeInsets.symmetric(horizontal: 20),
+            //         alignment: Alignment.center,
+            //         child: MarqueeWidget(
+            //           key: ValueKey(services.id),
+            //           child: CustomText(
+            //             "${'save'.translate(context: context)} ${saveAmount.priceFormat(context)}",
+            //             fontSize: 12,
+            //             fontWeight: FontWeight.bold,
+            //             color: context.colorScheme.accentColor,
+            //             textAlign: TextAlign.center,
+            //           ),
+            //         ),
+            //       ),
+            //     ),
+            //   ),
+            // ),
             Row(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -148,6 +148,19 @@ class ServiceDetailsCard extends StatelessWidget {
                                     fontWeight: FontWeight.w600,
                                     maxLines: 1,
                                   ),
+
+                                  // CustomText(
+                                  //   " ${services.duration} ${"minutes".translate(context: context)}",
+                                  //   fontSize: 12,
+                                  //   color: context.colorScheme.blackColor,
+                                  //   fontWeight: FontWeight.w600,
+                                  //   maxLines: 1,
+                                  // ),
+                                ],
+                              ),
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
                                   CustomSvgPicture(
                                     svgImage: AppAssets.icClock,
                                     height: 14,
@@ -156,44 +169,39 @@ class ServiceDetailsCard extends StatelessWidget {
                                   ),
                                   CustomText(
                                     " ${services.duration} ${"minutes".translate(context: context)}",
-                                    fontSize: 12,
+                                    fontSize: 16,
                                     color: context.colorScheme.blackColor,
                                     fontWeight: FontWeight.w600,
                                     maxLines: 1,
                                   ),
-                                ],
-                              ),
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  CustomText(
-                                    (services.priceWithTax != ''
-                                            ? services.priceWithTax!
-                                            : '0.0')
-                                        .priceFormat(context),
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 16,
-                                    color: context.colorScheme.blackColor,
-                                  ),
-                                  if (services.discountedPrice != '0')
-                                    const SizedBox(
-                                      width: 5,
-                                    ),
-                                  if (services.discountedPrice != '0')
-                                    Expanded(
-                                      child: CustomText(
-                                        (services.originalPriceWithTax != ''
-                                                ? services.originalPriceWithTax!
-                                                : '0.0')
-                                            .priceFormat(context),
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 12,
-                                        underlineOrLineColor: context.colorScheme.blackColor,
-                                        color: context.colorScheme.accentColor,
-                                        showLineThrough: true,
-                                        maxLines: 1,
-                                      ),
-                                    ),
+                                  // CustomText(
+                                  //   (services.priceWithTax != ''
+                                  //           ? services.priceWithTax!
+                                  //           : '0.0')
+                                  //       .priceFormat(context),
+                                  //   fontWeight: FontWeight.w700,
+                                  //   fontSize: 16,
+                                  //   color: context.colorScheme.blackColor,
+                                  // ),
+                                  // if (services.discountedPrice != '0')
+                                  //   const SizedBox(
+                                  //     width: 5,
+                                  //   ),
+                                  // if (services.discountedPrice != '0')
+                                  //   Expanded(
+                                  //     child: CustomText(
+                                  //       (services.originalPriceWithTax != ''
+                                  //               ? services.originalPriceWithTax!
+                                  //               : '0.0')
+                                  //           .priceFormat(context),
+                                  //       fontWeight: FontWeight.w500,
+                                  //       fontSize: 12,
+                                  //       underlineOrLineColor: context.colorScheme.blackColor,
+                                  //       color: context.colorScheme.accentColor,
+                                  //       showLineThrough: true,
+                                  //       maxLines: 1,
+                                  //     ),
+                                  //   ),
                                 ],
                               ),
                             ],

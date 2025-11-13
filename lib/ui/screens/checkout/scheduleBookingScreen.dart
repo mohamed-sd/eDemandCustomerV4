@@ -327,29 +327,78 @@ class _ScheduleBookingScreenState extends State<ScheduleBookingScreen> {
     );
   }
 
-  Widget _buildViewProviderInstructionField() => CustomContainer(
-        height: 52,
-        color: context.colorScheme.secondaryColor,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            CustomSvgPicture(
-              svgImage: AppAssets.edit,
-              color: context.colorScheme.accentColor,
-              height: 24,
-              width: 24,
+  String _selectedPriority = 'عادي'; // القيمة الافتراضية
+
+  Widget _buildViewProviderInstructionField(BuildContext context) {
+    return CustomContainer(
+      height: 52,
+      color: context.colorScheme.secondaryColor,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          CustomSvgPicture(
+            svgImage: AppAssets.edit,
+            color: context.colorScheme.accentColor,
+            height: 24,
+            width: 24,
+          ),
+          const SizedBox(width: 8),
+          Expanded(
+            child: DropdownButtonHideUnderline(
+              child: DropdownButton<String>(
+                value: _selectedPriority,
+                isExpanded: true,
+                icon: Icon(Icons.arrow_drop_down, color: context.colorScheme.accentColor),
+                items: const [
+                  DropdownMenuItem(value: 'عادي', child: Text('عادي')),
+                  DropdownMenuItem(value: 'عاجل', child: Text('عاجل')),
+                  DropdownMenuItem(value: 'عاجل جدًا', child: Text('عاجل جدًا')),
+                ],
+                onChanged: (value) {
+                  if (value != null) {
+                    setState(() {
+                      _selectedPriority = value;
+                    });
+                  }
+                },
+                style: TextStyle(
+                  color: context.colorScheme.blackColor,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
             ),
-            CustomText(
-              'writeInstruction'.translate(context: context),
-              color: context.colorScheme.blackColor,
-              fontSize: 16,
-              fontWeight: FontWeight.w400,
-              fontStyle: FontStyle.normal,
-            )
-          ],
-        ),
-      );
+          ),
+        ],
+      ),
+    );
+  }
+
+
+  // Widget _buildViewProviderInstructionField() => CustomContainer(
+  //       height: 52,
+  //       color: context.colorScheme.secondaryColor,
+  //       child: Row(
+  //         mainAxisAlignment: MainAxisAlignment.center,
+  //         crossAxisAlignment: CrossAxisAlignment.center,
+  //         children: [
+  //           CustomSvgPicture(
+  //             svgImage: AppAssets.edit,
+  //             color: context.colorScheme.accentColor,
+  //             height: 24,
+  //             width: 24,
+  //           ),
+  //           CustomText(
+  //             'writeInstruction'.translate(context: context),
+  //             color: context.colorScheme.blackColor,
+  //             fontSize: 16,
+  //             fontWeight: FontWeight.w400,
+  //             fontStyle: FontStyle.normal,
+  //           )
+  //         ],
+  //       ),
+  //     );
 
   Widget buildProviderInstructionField() => TextFormField(
         controller: _instructionController,
@@ -1094,72 +1143,72 @@ class _ScheduleBookingScreenState extends State<ScheduleBookingScreen> {
                       valueListenable: isProviderInstructionFieldEditClicable,
                       builder: (context, isEditable, child) => isEditable
                           ? buildProviderInstructionField()
-                          : _buildViewProviderInstructionField(),
+                          : _buildViewProviderInstructionField(context),
                     ),
                   )
                 ],
               ),
               verticalSpacing(),
               if (!isCustomJobRequest) ...[
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    GeneralCardContainer(
-                      onTap: () {
-                        if (widget.providerId == "0") {
-                          UiUtils.showMessage(
-                            context,
-                            'somethingWentWrong'.translate(context: context),
-                            ToastificationType.warning,
-                          );
-                          return;
-                        }
-                        Navigator.pushNamed(
-                          context,
-                          promocodeScreen,
-                          arguments: {
-                            "isFrom": widget.isFrom,
-                            "providerID": widget.providerId,
-                            "isAtStoreOptionSelected":
-                                selectedDeliverableOption == "atStore"
-                                    ? "1"
-                                    : "0"
-                          },
-                        ).then((final Object? value) {
-                          if (value != null) {
-                            final parameter = value as Map;
-                            promoCodeDiscount =
-                                double.parse(parameter["discount"]);
-                            appliedPromocode = parameter["appliedPromocode"];
-                            setState(() {});
-                          }
-                        });
-                      },
-                      imageName: AppAssets.discount,
-                      title: "applyCoupon",
-                      description: appliedPromocode != null
-                          ? "${appliedPromocode!.promoCode} ${"applied".translate(context: context)}"
-                          : "applyCouponAndGetExtraDiscount"
-                              .translate(context: context),
-                      extraWidgetWithDescription: appliedPromocode != null
-                          ? CustomInkWellContainer(
-                              onTap: () {
-                                promoCodeDiscount = 0.0;
-                                appliedPromocode = null;
-                                setState(() {});
-                              },
-                              child: CustomText(
-                                "remove".translate(context: context),
-                                fontSize: 12,
-                                color: context.colorScheme.lightGreyColor,
-                                fontStyle: FontStyle.italic,
-                                showUnderline: true,
-                              ),
-                            )
-                          : const SizedBox.shrink(),
-                    ),
-                  ],
-                ),
+                // Column(
+                //   crossAxisAlignment: CrossAxisAlignment.start,
+                //   children: [
+                //     GeneralCardContainer(
+                //       onTap: () {
+                //         if (widget.providerId == "0") {
+                //           UiUtils.showMessage(
+                //             context,
+                //             'somethingWentWrong'.translate(context: context),
+                //             ToastificationType.warning,
+                //           );
+                //           return;
+                //         }
+                //         Navigator.pushNamed(
+                //           context,
+                //           promocodeScreen,
+                //           arguments: {
+                //             "isFrom": widget.isFrom,
+                //             "providerID": widget.providerId,
+                //             "isAtStoreOptionSelected":
+                //                 selectedDeliverableOption == "atStore"
+                //                     ? "1"
+                //                     : "0"
+                //           },
+                //         ).then((final Object? value) {
+                //           if (value != null) {
+                //             final parameter = value as Map;
+                //             promoCodeDiscount =
+                //                 double.parse(parameter["discount"]);
+                //             appliedPromocode = parameter["appliedPromocode"];
+                //             setState(() {});
+                //           }
+                //         });
+                //       },
+                //       imageName: AppAssets.discount,
+                //       title: "applyCoupon",
+                //       description: appliedPromocode != null
+                //           ? "${appliedPromocode!.promoCode} ${"applied".translate(context: context)}"
+                //           : "applyCouponAndGetExtraDiscount"
+                //               .translate(context: context),
+                //       extraWidgetWithDescription: appliedPromocode != null
+                //           ? CustomInkWellContainer(
+                //               onTap: () {
+                //                 promoCodeDiscount = 0.0;
+                //                 appliedPromocode = null;
+                //                 setState(() {});
+                //               },
+                //               child: CustomText(
+                //                 "remove".translate(context: context),
+                //                 fontSize: 12,
+                //                 color: context.colorScheme.lightGreyColor,
+                //                 fontStyle: FontStyle.italic,
+                //                 showUnderline: true,
+                //               ),
+                //             )
+                //           : const SizedBox.shrink(),
+                //     ),
+                //   ],
+                // ),
               ],
               verticalSpacing(),
               if (showPaymentOptions) ...[
@@ -1293,89 +1342,89 @@ class _ScheduleBookingScreenState extends State<ScheduleBookingScreen> {
                           state.reOrderCartData?.cartDetails == null) {
                         return const SizedBox();
                       }
-                      return CustomContainer(
-                        color: context.colorScheme.secondaryColor,
-                        padding: const EdgeInsets.all(15),
-                        child: Column(
-                          children: [
-                            ChargesTile(
-                              title1: 'subTotal'.translate(context: context),
-                              title2: '',
-                              title3: (isCart
-                                      ? state.cartData.subTotal ?? "0"
-                                      : state.reOrderCartData?.subTotal ?? "0")
-                                  .priceFormat(context),
-                              fontSize: 14,
-                            ),
-                            if (promoCodeDiscount != 0.0) ...[
-                              const SizedBox(height: 5),
-                              ChargesTile(
-                                title1: "couponDiscount"
-                                    .translate(context: context),
-                                title2: '',
-                                title3:
-                                    '- ${promoCodeDiscount.toString().priceFormat(context)}',
-                                fontSize: 16,
-                                fontweight: FontWeight.w400,
-                              ),
-                            ],
-                            if ((isCart &&
-                                    state.cartData.visitingCharges != '0' &&
-                                    state.cartData.visitingCharges != '' &&
-                                    state.cartData.visitingCharges != 'null') ||
-                                (isReBooking &&
-                                    state.reOrderCartData?.visitingCharges !=
-                                        '0' &&
-                                    state.reOrderCartData?.visitingCharges !=
-                                        '' &&
-                                    state.reOrderCartData?.visitingCharges !=
-                                        'null')) ...[
-                              const SizedBox(height: 10),
-                              ChargesTile(
-                                title1: 'visitingCharge'
-                                    .translate(context: context),
-                                title2: '',
-                                title3:
-                                    '+ ${(isCart ? state.cartData.visitingCharges : state.reOrderCartData?.visitingCharges ?? "0")?.priceFormat(context) ?? "0"}',
-                                fontSize: 16,
-                                fontweight: FontWeight.w400,
-                              ),
-                            ],
-                            const SizedBox(height: 10),
-                            ChargesTile(
-                              title1: 'totalAmount'.translate(context: context),
-                              title2: '',
-                              title3: (double.parse(isCart
-                                          ? state.cartData.overallAmount !=
-                                                  "null"
-                                              ? state.cartData.overallAmount ??
-                                                  "0"
-                                              : "0"
-                                          : state.reOrderCartData
-                                                      ?.overallAmount !=
-                                                  "null"
-                                              ? state.reOrderCartData
-                                                      ?.overallAmount ??
-                                                  "0"
-                                              : '0') -
-                                      promoCodeDiscount -
-                                      (selectedDeliverableOption == "atStore"
-                                          ? double.parse(widget.isFrom == "cart"
-                                              ? state.cartData
-                                                      .visitingCharges ??
-                                                  "0"
-                                              : state.reOrderCartData
-                                                      ?.visitingCharges ??
-                                                  "0")
-                                          : 0))
-                                  .toStringAsFixed(2)
-                                  .priceFormat(context),
-                              fontSize: 18,
-                              fontweight: FontWeight.w700,
-                            ),
-                          ],
-                        ),
-                      );
+                      // return CustomContainer(
+                      //   color: context.colorScheme.secondaryColor,
+                      //   padding: const EdgeInsets.all(15),
+                      //   child: Column(
+                      //     children: [
+                      //       ChargesTile(
+                      //         title1: 'subTotal'.translate(context: context),
+                      //         title2: '',
+                      //         title3: (isCart
+                      //                 ? state.cartData.subTotal ?? "0"
+                      //                 : state.reOrderCartData?.subTotal ?? "0")
+                      //             .priceFormat(context),
+                      //         fontSize: 14,
+                      //       ),
+                      //       if (promoCodeDiscount != 0.0) ...[
+                      //         const SizedBox(height: 5),
+                      //         ChargesTile(
+                      //           title1: "couponDiscount"
+                      //               .translate(context: context),
+                      //           title2: '',
+                      //           title3:
+                      //               '- ${promoCodeDiscount.toString().priceFormat(context)}',
+                      //           fontSize: 16,
+                      //           fontweight: FontWeight.w400,
+                      //         ),
+                      //       ],
+                      //       if ((isCart &&
+                      //               state.cartData.visitingCharges != '0' &&
+                      //               state.cartData.visitingCharges != '' &&
+                      //               state.cartData.visitingCharges != 'null') ||
+                      //           (isReBooking &&
+                      //               state.reOrderCartData?.visitingCharges !=
+                      //                   '0' &&
+                      //               state.reOrderCartData?.visitingCharges !=
+                      //                   '' &&
+                      //               state.reOrderCartData?.visitingCharges !=
+                      //                   'null')) ...[
+                      //         const SizedBox(height: 10),
+                      //         ChargesTile(
+                      //           title1: 'visitingCharge'
+                      //               .translate(context: context),
+                      //           title2: '',
+                      //           title3:
+                      //               '+ ${(isCart ? state.cartData.visitingCharges : state.reOrderCartData?.visitingCharges ?? "0")?.priceFormat(context) ?? "0"}',
+                      //           fontSize: 16,
+                      //           fontweight: FontWeight.w400,
+                      //         ),
+                      //       ],
+                      //       const SizedBox(height: 10),
+                      //       ChargesTile(
+                      //         title1: 'totalAmount'.translate(context: context),
+                      //         title2: '',
+                      //         title3: (double.parse(isCart
+                      //                     ? state.cartData.overallAmount !=
+                      //                             "null"
+                      //                         ? state.cartData.overallAmount ??
+                      //                             "0"
+                      //                         : "0"
+                      //                     : state.reOrderCartData
+                      //                                 ?.overallAmount !=
+                      //                             "null"
+                      //                         ? state.reOrderCartData
+                      //                                 ?.overallAmount ??
+                      //                             "0"
+                      //                         : '0') -
+                      //                 promoCodeDiscount -
+                      //                 (selectedDeliverableOption == "atStore"
+                      //                     ? double.parse(widget.isFrom == "cart"
+                      //                         ? state.cartData
+                      //                                 .visitingCharges ??
+                      //                             "0"
+                      //                         : state.reOrderCartData
+                      //                                 ?.visitingCharges ??
+                      //                             "0")
+                      //                     : 0))
+                      //             .toStringAsFixed(2)
+                      //             .priceFormat(context),
+                      //         fontSize: 18,
+                      //         fontweight: FontWeight.w700,
+                      //       ),
+                      //     ],
+                      //   ),
+                      // );
                     }
                     return const SizedBox();
                   },
