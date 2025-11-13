@@ -330,48 +330,34 @@ class _ScheduleBookingScreenState extends State<ScheduleBookingScreen> {
   String _selectedPriority = 'عادي'; // القيمة الافتراضية
 
   Widget _buildViewProviderInstructionField(BuildContext context) {
-    return CustomContainer(
-      height: 52,
-      color: context.colorScheme.secondaryColor,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          CustomSvgPicture(
-            svgImage: AppAssets.edit,
-            color: context.colorScheme.accentColor,
-            height: 24,
-            width: 24,
-          ),
-          const SizedBox(width: 8),
-          Expanded(
-            child: DropdownButtonHideUnderline(
-              child: DropdownButton<String>(
-                value: _selectedPriority,
-                isExpanded: true,
-                icon: Icon(Icons.arrow_drop_down, color: context.colorScheme.accentColor),
-                items: const [
-                  DropdownMenuItem(value: 'عادي', child: Text('عادي')),
-                  DropdownMenuItem(value: 'عاجل', child: Text('عاجل')),
-                  DropdownMenuItem(value: 'عاجل جدًا', child: Text('عاجل جدًا')),
-                ],
-                onChanged: (value) {
-                  if (value != null) {
-                    setState(() {
-                      _selectedPriority = value;
-                    });
-                  }
-                },
-                style: TextStyle(
-                  color: context.colorScheme.blackColor,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
-            ),
-          ),
-        ],
+    return DropdownButtonFormField<String>(
+      value: _instructionController.text.isEmpty ? null : _instructionController.text,
+      isExpanded: true,
+      decoration: InputDecoration(
+        filled: true,
+        fillColor: context.colorScheme.secondaryColor,
+        hintText: 'writeDescriptionForProvider'.translate(context: context),
+        hintStyle: const TextStyle(fontSize: 12.6),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: context.colorScheme.secondaryColor, width: 2),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: context.colorScheme.secondaryColor),
+        ),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
       ),
+      items: const [
+        DropdownMenuItem(value: 'عادي', child: Text('عادي', style: TextStyle(fontSize: 12))),
+        DropdownMenuItem(value: 'عاجل', child: Text('عاجل', style: TextStyle(fontSize: 12))),
+        DropdownMenuItem(value: 'عاجل جدًا', child: Text('عاجل جدًا', style: TextStyle(fontSize: 12))),
+      ],
+      onChanged: (value) {
+        if (value != null) {
+          _instructionController.text = value; // 👈 حفظ القيمة في الـ controller
+        }
+      },
+      style: const TextStyle(fontSize: 12, color: Colors.black),
+      icon: Icon(Icons.arrow_drop_down, color: context.colorScheme.accentColor),
     );
   }
 
